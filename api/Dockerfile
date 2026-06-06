@@ -9,6 +9,6 @@ COPY . .
 RUN mkdir -p uploads
 RUN npx prisma generate
 
-EXPOSE 4000
+EXPOSE 4821
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev:migrate"]
