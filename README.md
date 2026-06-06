@@ -11,6 +11,8 @@ A full-stack web application to manage and visualize an organization's structure
 - **Employee Directory:** Search by name and position.
 - **Hierarchical Visualization:** "Reports to" relationships.
 - **Database Schema:** Detailed [SCHEMA.md](./SCHEMA.md) documentation.
+- **Sample Data:** Seeded with 3 teams and 20 employees across a realistic hierarchy.
+- **Visual Documentation:** Automated screenshots generated via Playwright.
 - **Dockerized:** Easy deployment using Docker Compose.
 
 ## Tech Stack
@@ -39,8 +41,24 @@ A full-stack web application to manage and visualize an organization's structure
 
 For the first login, use the default Administrator account:
 
-- **Email:** `admin@example.com`
-- **Password:** `admin123`
+- **Email:** `ceo@example.com`
+- **Password:** `password123`
+
+## Documentation & Screenshots
+
+The project includes an automated documentation generator using Playwright. 
+
+### Generating Screenshots
+
+1. Ensure the app is running (`docker-compose up`).
+2. Navigate to the `e2e` folder:
+   ```bash
+   cd e2e
+   npm install
+   npx playwright install
+   npm run gen-docs
+   ```
+Screenshots will be saved in `docs/screenshots/`.
 
 ## License
 

@@ -1,0 +1,12 @@
+{
+  "name": "org-structure-e2e",
+  "version": "1.0.0",
+  "description": "E2E tests and documentation generation for Org Structure App",
+  "scripts": {
+    "test": "playwright test",
+    "gen-docs": "playwright test generate-docs.spec.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  }
+}
