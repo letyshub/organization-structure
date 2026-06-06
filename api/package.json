@@ -4,9 +4,9 @@
   "description": "Backend API for Organization Structure Management",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "dev:migrate": "npx prisma migrate dev --name init && npx prisma db seed && npm run dev",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev:migrate": "npx prisma db push && npx prisma db seed && npm run dev",
     "build": "tsc",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import UserCard from '../components/UserCard';
+import OrgChart from '../components/OrgChart';
 
 const Dashboard: React.FC = () => {
   const [users, setUsers] = useState([]);
@@ -9,6 +10,7 @@ const Dashboard: React.FC = () => {
   const [searchName, setSearchName] = useState('');
   const [selectedPosition, setSelectedPosition] = useState('');
   const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'list' | 'chart'>('list');
   const { token, user: currentUser } = useAuth();
   const navigate = useNavigate();
 
@@ -63,9 +65,35 @@ const Dashboard: React.FC = () => {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h2>Employee Directory</h2>
-        {canEdit && (
-          <button onClick={() => navigate('/users/new')}>+ Add Person</button>
-        )}
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <div className="card" style={{ padding: '0.25rem', display: 'flex', gap: '0.25rem', background: '#e2e8f0' }}>
+            <button 
+              onClick={() => setViewMode('list')} 
+              style={{ 
+                background: viewMode === 'list' ? 'var(--primary)' : 'transparent',
+                color: viewMode === 'list' ? 'white' : 'var(--text)',
+                padding: '0.25rem 0.75rem',
+                fontSize: '0.875rem'
+              }}
+            >
+              List
+            </button>
+            <button 
+              onClick={() => setViewMode('chart')} 
+              style={{ 
+                background: viewMode === 'chart' ? 'var(--primary)' : 'transparent',
+                color: viewMode === 'chart' ? 'white' : 'var(--text)',
+                padding: '0.25rem 0.75rem',
+                fontSize: '0.875rem'
+              }}
+            >
+              Chart
+            </button>
+          </div>
+          {canEdit && (
+            <button onClick={() => navigate('/users/new')}>+ Add Person</button>
+          )}
+        </div>
       </div>
 
       <div style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -92,21 +120,27 @@ const Dashboard: React.FC = () => {
       {loading ? (
         <p>Loading directory...</p>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
-          {users.length > 0 ? (
-            users.map((user: any) => (
-              <UserCard 
-                key={user.id} 
-                user={user} 
-                onEdit={canEdit ? (id) => navigate(`/users/edit/${id}`) : undefined}
-                onDelete={canEdit ? handleDelete : undefined}
-                onClick={(id) => navigate(`/users/edit/${id}`)} 
-              />
-            ))
+        <>
+          {viewMode === 'list' ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+              {users.length > 0 ? (
+                users.map((user: any) => (
+                  <UserCard 
+                    key={user.id} 
+                    user={user} 
+                    onEdit={canEdit ? (id) => navigate(`/users/edit/${id}`) : undefined}
+                    onDelete={canEdit ? handleDelete : undefined}
+                    onClick={(id) => navigate(`/users/edit/${id}`)} 
+                  />
+                ))
+              ) : (
+                <p style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem 0', color: 'var(--secondary)' }}>No people found matching your criteria.</p>
+              )}
+            </div>
           ) : (
-            <p style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem 0', color: 'var(--secondary)' }}>No people found matching your criteria.</p>
+            <OrgChart users={users} />
           )}
-        </div>
+        </>
       )}
     </div>
   );
