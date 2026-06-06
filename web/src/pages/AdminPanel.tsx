@@ -8,7 +8,7 @@ const AdminPanel: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4821';
 
   const fetchData = async () => {
     try {

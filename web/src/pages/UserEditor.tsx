@@ -6,7 +6,7 @@ const UserEditor: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { token } = useAuth();
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4821';
 
   const [formData, setFormData] = useState({
     email: '',

@@ -33,7 +33,7 @@ A full-stack web application to manage and visualize an organization's structure
    ```bash
    docker-compose up --build
    ```
-3. Access the web interface at `http://localhost:3000`.
+3. Access the web interface at `http://localhost:3914`.
 
 ## License
 
