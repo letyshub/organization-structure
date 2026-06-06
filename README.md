@@ -35,6 +35,13 @@ A full-stack web application to manage and visualize an organization's structure
    ```
 3. Access the web interface at `http://localhost:3914`.
 
+## Initial Login
+
+For the first login, use the default Administrator account:
+
+- **Email:** `admin@example.com`
+- **Password:** `admin123`
+
 ## License
 
 MIT
