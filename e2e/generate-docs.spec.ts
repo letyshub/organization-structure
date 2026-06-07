@@ -7,22 +7,33 @@ test('Generate documentation screenshots', async ({ page }) => {
   await page.goto(`${baseUrl}/login`);
   await page.fill('input[type="email"]', 'ceo@example.com');
   await page.fill('input[type="password"]', 'password123');
+  
+  // Click and wait for navigation or error
   await page.click('button[type="submit"]');
   
-  // Wait for redirect to dashboard
-  await expect(page).toHaveURL(`${baseUrl}/`);
-  await page.waitForSelector('.org-node-container', { timeout: 5000 }).catch(() => {}); // Wait for chart if it was active
-  await page.waitForSelector('.card', { timeout: 5000 });
+  // If we stay on login, let's see why
+  const error = page.locator('p[style*="color: var(--error)"]');
+  if (await error.isVisible()) {
+    const message = await error.innerText();
+    throw new Error(`Login failed with message: "${message}". Make sure the database is seeded with ceo@example.com.`);
+  }
+
+  await expect(page).toHaveURL(`${baseUrl}/`, { timeout: 10000 });
+  
+  // Wait for content to load
+  await page.waitForSelector('.card', { timeout: 10000 });
+  await page.waitForTimeout(2000); // Wait for animations/rendering
 
   // 2. Dashboard - List View
-  await page.click('button:has-text("List")');
-  await page.waitForTimeout(1000);
   await page.screenshot({ path: '../docs/screenshots/dashboard-list.png', fullPage: true });
 
   // 3. Dashboard - Chart View
-  await page.click('button:has-text("Chart")');
-  await page.waitForTimeout(1000);
-  await page.screenshot({ path: '../docs/screenshots/dashboard-chart.png', fullPage: true });
+  const chartBtn = page.locator('button:has-text("Chart")');
+  if (await chartBtn.isVisible()) {
+    await chartBtn.click();
+    await page.waitForTimeout(2000); // Wait for tree to render
+    await page.screenshot({ path: '../docs/screenshots/dashboard-chart.png', fullPage: true });
+  }
 
   // 4. Admin Panel
   await page.goto(`${baseUrl}/admin`);

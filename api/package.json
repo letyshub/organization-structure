@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "dev:migrate": "npx prisma db push && npx prisma db seed && npm run dev",
+    "dev:migrate": "until npx prisma db push; do echo 'Waiting for database...' && sleep 2; done && npx prisma db seed && npm run dev",
     "build": "tsc",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
@@ -39,6 +39,7 @@
     "prisma": "^5.14.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
