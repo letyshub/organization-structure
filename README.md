@@ -22,6 +22,20 @@ A full-stack web application to manage and visualize an organization's structure
 - **Database:** PostgreSQL, Prisma ORM.
 - **DevOps:** Docker, Docker Compose.
 
+## Visual Documentation
+
+### Dashboard - List View
+![Dashboard List](./docs/screenshots/dashboard-list.png)
+
+### Dashboard - Organizational Chart
+![Dashboard Chart](./docs/screenshots/dashboard-chart.png)
+
+### Admin Panel - Positions & Teams
+![Admin Panel](./docs/screenshots/admin-panel.png)
+
+### User Editor - Employee Management
+![User Editor](./docs/screenshots/user-editor.png)
+
 ## Getting Started
 
 ### Prerequisites
